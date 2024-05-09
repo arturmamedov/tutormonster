@@ -10,7 +10,7 @@ $windows = true;
 $dbName = "tritalaravel"; //quest
 $config_dir = __DIR__ . "/config";
 $folder_name = "tritalaravel"; //se cambiata da mettere in .gitignore
-$repo_name = "laravel-comics";
+$repo_name = "laravel-model-controller";
 //fine config
 
 // @todo switch case con scelta browser come scritta ma selezione poi del percorso
@@ -93,7 +93,7 @@ while (true) {
     }
 
     // Gestisci la risposta
-    if (is_numeric($response) && $response > 0 && $response <= $userCount) {
+    if (is_numeric($response) && $response >= 0 && $response <= $userCount) {
         // Un solo utente specificato
         $selectedUsers = array_slice($users, $response, 1);
     } elseif (strpos($response, 'da ') === 0) {
