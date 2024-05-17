@@ -184,17 +184,21 @@ while (true) {
         echo "/usr/local/bin/php artisan storage:link \n";
         run("php artisan storage:link");
 
-        echo "Creazione utente di test user:tritalaravel@boolean.it pass:tritalaravel\n";
-        $email = 'tritalaravel@boolean.it';
-        $password = password_hash('tritalaravel', PASSWORD_DEFAULT); // Hash della password: $2y$10$AGMGqtB0TjrZCjxjlQWVDuYVGV8dpGTU5Q7zeiGAlhCNqDRHXkH9i
-        // replaced with , CURRENT_TIMESTAMP $emailVerifiedAt = date('Y-m-d H:i:s'); // Timestamp corrente per email verificata
+        try {
+            echo "DATABASE: Creazione utente di test user:tritalaravel@boolean.it pass:tritalaravel\n";
+            $email = 'tritalaravel@boolean.it';
+            $password = password_hash('tritalaravel', PASSWORD_DEFAULT); // Hash della password: $2y$10$AGMGqtB0TjrZCjxjlQWVDuYVGV8dpGTU5Q7zeiGAlhCNqDRHXkH9i
+            // replaced with , CURRENT_TIMESTAMP $emailVerifiedAt = date('Y-m-d H:i:s'); // Timestamp corrente per email verificata
 
-        $query = "INSERT INTO 
-              users (name, email, password, email_verified_at) 
-              VALUES ('Paolo Mistretta', '$email', '$password', CURRENT_TIMESTAMP);
-             ";
+            $query = "INSERT INTO 
+                  users (name, email, password, email_verified_at) 
+                  VALUES ('Paolo Mistretta', '$email', '$password', CURRENT_TIMESTAMP);
+                 ";
 
-        executeQuery($query, $dbName);
+            executeQuery($query, $dbName);
+        } catch (Exception $e) {
+            echo "DATABASE: Utente non creato: ". $e->getMessage();
+        }
 
         echo "npm run dev & $\n";
         //$npmProcess = run("npm run dev > /dev/null 2>&1 & echo $!"); // Avvio NPM in background
