@@ -84,7 +84,7 @@ while (true) {
 
     // Chiedi quale/i utente/i verificare
     echo "Quale utente vuoi verificare? (Inserisci un numero, 'da [numero]', 'prima metà', 'seconda metà', 'exit' per uscire): ";
-    $response = fgets(STDIN);
+    $response = trim(fgets(STDIN));
 
     // Gestisci il comando di uscita
     if (strtolower($response) === 'exit') {
@@ -122,16 +122,14 @@ while (true) {
 
         echo "Controllo sporcizia $user\n";
         if (file_exists($user_dir)) {
-
             echo "Cancello vecchia directory $user_dir\n";
             run("rm -rf $user_dir");
-
         }
 
         echo "Creazione nuovo db $dbName\n";
         executeQuery("CREATE DATABASE IF NOT EXISTS `$dbName`;");
 
-        echo "Creazione nuova directory $dbName $user_dir\n";
+        echo "Creazione nuova directory $user_dir\n";
         mkdir($user_dir, 0777, true);
 
         echo "Cambio directory in $user_dir\n";
@@ -213,7 +211,7 @@ while (true) {
         // Attesa della chiusura di Chrome
         echo "Valutazione umana di $user\n";
         echo "Premi [d] per eliminare tutto, [Qualsiasi tasto] per uscire e basta";
-        $press = fgets(STDIN);
+        $press = trim(fgets(STDIN));
 
         if ($press = 'd') {
             // Terminazione dei processi Laravel e NPM
