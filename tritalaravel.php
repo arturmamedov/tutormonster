@@ -76,6 +76,13 @@ echo "Directory repository OK\n";
 $initial_dir = getcwd();
 
 while (true) {
+    echo "Repository (Y/N): ". $repo_name . "\n";
+    $res_repo_name = fgets(STDIN);
+    // Gestisci il comando di uscita
+    if (strtolower(trim($res_repo_name)) !== 'y') {
+        echo "Insert repo name: \n";
+        $repo_name = trim(fgets(STDIN));
+    }
 
     echo "Elenco degli utenti:\n";
     foreach ($users as $index => $user) {
