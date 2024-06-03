@@ -4,13 +4,14 @@ include "lib/functions.php";
 
 //config
 $with_new_db = true; // creare db nuovo per ogni utente o sempre lo stesso?
+$with_clean_of_old_repo = true; // eliminare tutte le vecchie repo gia' scaricate in precendenza?
 $with_npm_build = true; // lanciare anche npm install e build?
 $windows = true;
 
 $dbName = "tritalaravel"; //quest
 $config_dir = __DIR__ . "/config";
 $folder_name = "tritalaravel"; //se cambiata da mettere in .gitignore
-$repo_name = "laravel-model-controller";
+$repo_name = "laravel-api";
 //fine config
 
 // @todo switch case con scelta browser come scritta ma selezione poi del percorso
@@ -57,6 +58,12 @@ $users = [
     34 => "alessiavozzo",
 ];
 
+// check if the repo was already cloned
+$_users_repo_exist = [];
+foreach ($users as $index => $user) {
+    $_users_repo_exist[$index] = (file_exists($folder_name.DS.$user.DS.$repo_name)) ? true : false;
+}
+
 // Flag per scegliere quale metà degli utenti processare
 $processFirstHalf = 2; // Imposta su false per processare la seconda metà
 
@@ -86,7 +93,8 @@ while (true) {
 
     echo "Elenco degli utenti:\n";
     foreach ($users as $index => $user) {
-        echo ($index) . ". $user\n";
+        echo ($index) . " - $user ";
+        echo $_users_repo_exist[$index] ? "(repo already exist) \n" : "\n";
     }
 
     // Chiedi quale/i utente/i verificare
@@ -128,7 +136,7 @@ while (true) {
         }
 
         echo "Controllo sporcizia $user\n";
-        if (file_exists($user_dir)) {
+        if ($with_clean_of_old_repo && file_exists($user_dir)) {
             echo "Cancello vecchia directory $user_dir\n";
             run("rm -rf $user_dir");
         }
